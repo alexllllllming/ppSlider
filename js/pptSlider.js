@@ -13,7 +13,7 @@
             autoPlay: true,          // autoPlay: true or false
             beginIndex: 0,           // first index of your slides
             playSpeed: 5000,         // the time between two slides, in milliseconds
-            animationSpeed: 800,     // the time for animations, in milliseconds 
+            animationSpeed: 1000,     // the time for animations, in milliseconds 
             hoverPause: false,       // slide pause when hover
             controlBar: true,        // show controlbar
         },options)
@@ -29,10 +29,10 @@
                 $navList,
                 $controlBar,
 
-                prevIdx = -1,
-                slidesLength = settings.beginIndex,
-                outerHeight = $slideBox.height(),
-                outerWidth = $slideBox.width(),
+                prevIdx = settings.beginIndex,      // first slide
+                slidesLength = 0,
+                outerHeight,                        // the height of a slide
+                outerWidth,                         // the width of a slide
 
                 // animation effects
                 effects = ['flyUp', 'flyRight', 'flyDown', 'flyLeft',
@@ -47,7 +47,7 @@
 
                     var effect = effects[~~(Math.random() * effects.length)],
                         speed = settings.animationSpeed
-
+                    console.log(effect)
                     switch(effect){
                         case 'flyUp':
                             $next
@@ -95,49 +95,76 @@
                     },speed)
 
                 },
-
-                slideToggle = function(event){
-                    console.log("i am here")
-
+                // navList click envent handler
+                navClick = function(event){
                     var curIdx = $(event.target).data('i')
+                    
+                    slideToggle(curIdx)
+
+                },
+
+                createSlide = function(curIdx){
+                    // create new slide
+                    var slide = document.createElement("img")
+                    // slide setting
+                    slide.src = settings.hrefPrefix + 
+                              (curIdx) + 
+                              settings.imgType 
+
+                    return slide
+                },   
+                // slide change acoording to index num when click happen
+                slideToggle = function(curIdx){
 
                     // same idx, no changes
                     if(curIdx == prevIdx)
                         return
 
-                    // new slide
-                    var slide = document.createElement("img")
+                    // animation between to slide
+                    animateTo($('img',$slideBox).eq(0), $(createSlide(curIdx)))                
 
-
-                    // init
-                    if (prevIdx + 1){
-                        slide.src = settings.hrefPrefix + 
-                                        (++prevIdx) + 
-                                        settings.imgType 
-
-                        $slideBox.append(slide)
-                    }
-                    else{
-                        slide.src = settings.hrefPrefix + 
-                                        (curIdx) + 
-                                        settings.imgType 
-
-                        slide.style.display = "none"
-                        $slideBox.append(slide)
-                        
-                        animateTo($slideBox.eq(0), $(slide))                
-                        prevIdx = curIdx
-                    }
+                    // change the previous index to current index
+                    prevIdx = curIdx
                     
                      
-                };
+                },
 
-                $(document).on('click','#slideNav a',slideToggle)
+                autoPlay = function () {
+                    autoPlayHandler = setInterval(function(){
+                        var beginIndex = settings.beginIndex,
+                            curIdx = prevIdx < beginIndex + slidesLength - 1    
+                                    ? prevIdx + 1 : beginIndex  
+                        slideToggle(curIdx)
+                        console.log(prevIdx +":"+ beginIndex + slidesLength)
+                    },settings.playSpeed)
+                },
 
-                //create order for navList
-                $('a',$this).each(function(){
-                    $(this).data('i',slidesLength++)
-                })
+                // immediate function 
+                init = (function(){
+                    // start with the first slide
+                    var i = prevIdx,
+                        $firstSlide = $(createSlide(prevIdx))
+                                            .appendTo($slideBox);
+
+                    outerHeight = $this.height()
+                    outerWidth = $this.width()             
+
+                    // add event handler
+                    $(document).on('click','#slideNav a',navClick)
+
+                    //create order for navList and get slidesLengtho
+                    $('a',$this).each(function(){
+                        $(this).data('i',i++)
+                        slidesLength++
+                    })    
+
+                    if (settings.autoPlay){
+                        autoPlay()
+                    }
+
+                })();
+
+                
         })
     }
   
