@@ -16,6 +16,7 @@
             animationSpeed: 1000,     // the time for animations, in milliseconds 
             hoverPause: false,       // slide pause when hover
             controlBar: true,        // show controlbar
+            classPrefix: 'pSlider-'
         },options)
 
         return this.each(function(){
@@ -24,9 +25,9 @@
             var $this = $(this),
 
                 // slider components 
-                $slideBox = $("<div class='slideBox'></div>").prependTo($this),
+                $slideBox,
                 $navList = $this.children('ul'),
-                $navList,
+                $linkList = $('a',$this),
                 $controlBar,
 
                 prevIdx = settings.beginIndex,      // first slide
@@ -47,7 +48,6 @@
 
                     var effect = effects[~~(Math.random() * effects.length)],
                         speed = settings.animationSpeed
-                    console.log(effect)
                     switch(effect){
                         case 'flyUp':
                             $next
@@ -97,10 +97,10 @@
                 },
                 // navList click envent handler
                 navClick = function(event){
-                    var curIdx = $(event.target).data('i')
+                    var $target = $(event.target),
+                        curIdx = $target.data('i')
                     
                     slideToggle(curIdx)
-
                 },
 
                 createSlide = function(curIdx){
@@ -120,6 +120,14 @@
                     if(curIdx == prevIdx)
                         return
 
+                    $linkList
+                        .eq(curIdx)
+                        .addClass('active')
+
+                    $linkList
+                        .eq(prevIdx)
+                        .removeClass('active')
+
                     // animation between to slide
                     animateTo($('img',$slideBox).eq(0), $(createSlide(curIdx)))                
 
@@ -128,15 +136,23 @@
                     
                      
                 },
-
+                // 
                 autoPlay = function () {
                     autoPlayHandler = setInterval(function(){
                         var beginIndex = settings.beginIndex,
                             curIdx = prevIdx < beginIndex + slidesLength - 1    
                                     ? prevIdx + 1 : beginIndex  
+
+                        // slide exchange
                         slideToggle(curIdx)
-                        console.log(prevIdx +":"+ beginIndex + slidesLength)
+
+                         // activate progress bar
+                        $("."+settings.classPrefix+"progress")
+                            .animate({width: '100%'},settings.playSpeed,function(){
+                                $(this).css({width: '0px'})
+                        })
                     },settings.playSpeed)
+                   
                 },
 
                 // immediate function 
@@ -149,18 +165,40 @@
                     outerHeight = $this.height()
                     outerWidth = $this.width()             
 
-                    // add event handler
-                    $(document).on('click','#slideNav a',navClick)
+                    $slideBox = $("<div class='"+settings.classPrefix+"box'></div>")
+                            .prependTo($this)
 
+                    // add event handler
+                    $(document).on('click','.pSlider-nav a',navClick)
+                    
                     //create order for navList and get slidesLengtho
-                    $('a',$this).each(function(){
+                    $linkList.each(function(){
                         $(this).data('i',i++)
                         slidesLength++
                     })    
 
+                    // display the first slide
+                    $slideBox.append(createSlide(prevIdx))
+
+                    // if controlBar enabled, default: true
+                    if (settings.controlBar){
+                        $controlBar = $("<div class='"+settings.classPrefix+"progress'></div>"+
+                                    "<div class='"+settings.classPrefix+"control'>"+          
+                                    "<div class='"+settings.classPrefix+"left-control'>"+
+                                    "<img src='img/play.png'></div>"+
+                                    "<img src='img/full-screen.png'>"+
+                                    "<div class='"+settings.classPrefix+"right-control'>"+
+                                    "<span>收起列表</span><img src='img/right-arrow.png'></div>"+
+                                    "</div>"
+                                    )
+                                .appendTo($this)
+                    }
+                    // if autoPlay enable, default: true
                     if (settings.autoPlay){
                         autoPlay()
                     }
+                    
+
 
                 })();
 
