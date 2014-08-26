@@ -26,7 +26,7 @@
 
                 // slider components 
                 $slideBox,
-                $navList = $this.children('ul'),
+                $navList = $this.children('div'),
                 $linkList = $('a',$this),
                 $controlBar,
 
@@ -34,7 +34,9 @@
                 slidesLength = 0,
                 outerHeight,                        // the height of a slide
                 outerWidth,                         // the width of a slide
-
+                classPrefix = settings.classPrefix, // css class prefix
+                isAutoPlay = settings.autoPlay,     // boolean flag for autoPlay
+                isFold = !settings.controlBar,      // boolean flag for navList folding
                 // animation effects
                 effects = ['flyUp', 'flyRight', 'flyDown', 'flyLeft',
                         'fadeIn'
@@ -137,7 +139,13 @@
                      
                 },
                 // 
-                autoPlay = function () {
+                autoPlay = function (target) {
+
+                    // switch button
+                    if (target){
+                        target.src = "img/pause.png"
+                    }
+                    // set timer
                     autoPlayHandler = setInterval(function(){
                         var beginIndex = settings.beginIndex,
                             curIdx = prevIdx < beginIndex + slidesLength - 1    
@@ -151,8 +159,56 @@
                             .animate({width: '100%'},settings.playSpeed,function(){
                                 $(this).css({width: '0px'})
                         })
+
+                        
                     },settings.playSpeed)
                    
+                    return true;
+                },
+
+                stopPlay = function(target){
+                    console.log(target)
+                    clearInterval(autoPlayHandler)
+                    // switch button
+                    target.src = "img/play.png"
+
+                    return false;
+                },
+
+                playSwitch = function(event){
+                    var target = event.target
+
+                    isAutoPlay = isAutoPlay ? stopPlay(target) : autoPlay(target);
+                    console.log(isAutoPlay)
+                },
+
+                foldNav = function(event){
+                    var target = event.target
+
+                    isFold ? $navList.show() : $navList.hide()
+                    
+                    isFold = !isFold
+
+                    if (isFold){
+                        target.innerText = "展开列表"
+                        target
+                            .nextSibling
+                            .src = "img/left-arrow.png"
+                        
+                        $slideBox.animate({width:"100%"},settings.animationSpeed)
+                    }
+                    else{
+                        target.innerText = "收起列表"
+                        target
+                            .nextSibling
+                            .src = "img/right-arrow.png"
+                        
+                        $slideBox.animate({width:"80%"},settings.animationSpeed)
+                    }
+
+
+
+
                 },
 
                 // immediate function 
@@ -168,8 +224,6 @@
                     $slideBox = $("<div class='"+settings.classPrefix+"box'></div>")
                             .prependTo($this)
 
-                    // add event handler
-                    $(document).on('click','.pSlider-nav a',navClick)
                     
                     //create order for navList and get slidesLengtho
                     $linkList.each(function(){
@@ -182,17 +236,28 @@
 
                     // if controlBar enabled, default: true
                     if (settings.controlBar){
-                        $controlBar = $("<div class='"+settings.classPrefix+"progress'></div>"+
-                                    "<div class='"+settings.classPrefix+"control'>"+          
-                                    "<div class='"+settings.classPrefix+"left-control'>"+
-                                    "<img src='img/play.png'></div>"+
+                        var playButton = isAutoPlay ? "img/pause.png" : "img/play.png"
+                            
+                        $controlBar = $("<div class='"+classPrefix+"progress'></div>"+
+                                    "<div class='"+classPrefix+"control'>"+          
+                                    "<div class='"+classPrefix+"left-control'>"+
+                                    "<img src='"+playButton+"'></div>"+
                                     "<img src='img/full-screen.png'>"+
-                                    "<div class='"+settings.classPrefix+"right-control'>"+
+                                    "<div class='"+classPrefix+"right-control'>"+
                                     "<span>收起列表</span><img src='img/right-arrow.png'></div>"+
                                     "</div>"
                                     )
                                 .appendTo($this)
+
+                        // controlBar click event
+                        $('span',$controlBar).on('click',foldNav)
+                        $('.'+classPrefix+"left-control").on('click', playSwitch)
+                            
                     }
+
+                    // add event handler
+                    $('.pSlider-nav a',$this).on('click',navClick)
+
                     // if autoPlay enable, default: true
                     if (settings.autoPlay){
                         autoPlay()
