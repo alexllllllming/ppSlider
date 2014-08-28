@@ -41,10 +41,73 @@
                 effects = ['flyUp', 'flyRight', 'flyDown', 'flyLeft',
                         'fadeIn'
                   ],
+                
+                autoPlayHandler,                     // handler for auto play
 
+                fullscreenMap = [
+                        // no prefixes
+                        [
+                            'fullscreenEnabled',
+                            'requestFullscreen',
+                            'fullscreenElement',
+                            'exitFullscreen',
+                            'fullscreenchange',
+                            'fullscreenerror'
+                        ],
+                        // webkit
+                        [
+                            'webkitFullscreenEnabled',
+                            'webkitRequestFullscreen',
+                            'webkitFullscreenElement',
+                            'webkitExitFullscreen',
+                            'webkitfullscreenchange',
+                            'webkitfullscreenerror'
+                        ],
+                        // moz, capital Screen
+                        [
+                            'mozFullScreenEnabled',
+                            'mozRequestFullScreen',
+                            'mozFullScreenElement',
+                            'mozCancelFullScreen',
+                            'mozfullscreenchange',
+                            'mozfullscreenerror'
+                        ],
+                        // ie
+                        [
+                            'msFullscreenEnabled',
+                            'msRequestFullscreen',
+                            'msFullscreenElement',
+                            'msExitFullscreen',
+                            'MSFullscreenChange',
+                            'MSFullscreenError'
+                        ]
 
-                // handler
-                autoPlayHandler,
+                    ],
+                
+                fullscreen = {'support': false},                     // object for fullscreen attribute and function
+
+                fullscreenDetect = (function(){                      // detect valid fullscreen attribute and function
+                    var i,
+                        length,
+                        keys = fullscreenMap[0],
+                        values
+
+                    for (i = 0, length = fullscreenMap.length; i < length; i+=1){
+
+                        // valid functions
+                        var values = fullscreenMap[i]
+
+                        if(document[values[0]]){
+                            
+                            fullscreen.support = true
+
+                            for (i = 0, length = keys.length; i < length; i+=1){
+                                fullscreen[keys[i]] = values[i]
+                            }
+                            break;
+                        }           
+                    }
+                })(),
 
                 animateTo = function($prev, $next){
 
@@ -242,7 +305,8 @@
                                     "<div class='"+classPrefix+"control'>"+          
                                     "<div class='"+classPrefix+"left-control'>"+
                                     "<img src='"+playButton+"'></div>"+
-                                    "<img src='img/full-screen.png'>"+
+                                    // if fullscreen is supported 
+                                    (fullscreen.support ? "<img src='img/full-screen.png'>" : "")+  
                                     "<div class='"+classPrefix+"right-control'>"+
                                     "<span>收起列表</span><img src='img/right-arrow.png'></div>"+
                                     "</div>"
