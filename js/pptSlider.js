@@ -109,7 +109,16 @@
                     }
                 })(),
 
-                animateTo = function($prev, $next){
+                fullscreenToggle = function(element){               // toggle switch depend on the fullscreenElement
+                    if (document[fullscreen.fullscreenElement]){
+                        document[fullscreen.exitFullscreen]()
+                    }
+                    else{
+                        element[fullscreen.requestFullscreen]()
+                    }
+                },
+
+                animateTo = function($prev, $next){                 // create animation betwwen prev and next
 
                     var effect = effects[~~(Math.random() * effects.length)],
                         speed = settings.animationSpeed
@@ -317,6 +326,25 @@
                         $('span',$controlBar).on('click',foldNav)
                         $('.'+classPrefix+"left-control").on('click', playSwitch)
                             
+                    }
+                    
+                    // add event handler if fullscreen api support
+                    if (fullscreen.support){
+
+                        // fullscreen change event
+                        document.addEventListener(fullscreen.fullscreenchange,function(){
+                        })
+
+                        // fullscreen error event
+                        document.addEventListener(fullscreen.fullscreenerror,function(){
+                        })
+                        
+                        // click event on fullscreen button
+                        $('.'+classPrefix+'control>img')
+                            .on('click',function(){
+                                fullscreenToggle($this[0])
+                            })
+                    
                     }
 
                     // add event handler
