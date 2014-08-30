@@ -13,9 +13,10 @@
             autoPlay: true,          // autoPlay: true or false
             beginIndex: 0,           // first index of your slides
             playSpeed: 5000,         // the time between two slides, in milliseconds
-            animationSpeed: 1000,     // the time for animations, in milliseconds 
+            animationSpeed: 1000,    // the time for animations, in milliseconds 
             hoverPause: false,       // slide pause when hover
             controlBar: true,        // show controlbar
+            navFold: true,           // default fold the navList
             classPrefix: 'pSlider-'
         },options)
 
@@ -257,6 +258,13 @@
                 foldNav = function(event){
                     var target = event.target
 
+                    isFold ? $navList
+                                .show()
+                                .css({'display':'inline-block'})
+                           : $navList
+                                .hide()
+
+                        
                     isFold = !isFold
 
                     if (isFold){
@@ -265,7 +273,6 @@
                             .nextSibling
                             .src = "img/left-arrow.png"
                         
-                        $navList.hide()
                         $slideBox.animate({width:"100%"})
                     }
                     else{
@@ -274,9 +281,7 @@
                             .nextSibling
                             .src = "img/right-arrow.png"
                         
-                        $slideBox.animate({width:"80%"},function(){
-                             $navList.show();
-                        })
+                        $slideBox.animate({width:"80%"})
                     }
 
 
@@ -324,7 +329,12 @@
                                 .appendTo($this)
 
                         // controlBar click event
-                        $('span',$controlBar).on('click',foldNav)
+                        settings.navFold ? $('span',$controlBar)
+                                                .on('click',foldNav)
+                                                .trigger('click')
+                                         : $('span',$controlBar)
+                                                .on('click',foldNav)
+
                         $('.'+classPrefix+"left-control").on('click', playSwitch)
                             
                     }

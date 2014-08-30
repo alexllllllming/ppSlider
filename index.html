@@ -5,18 +5,82 @@
     <meta charset="utf-8" />
     <style>
     #pptslider{
-        margin-top: 50px;
-        margin-left: 100px;
         width: 1000px;
-        height: 600px;
+        height: 580px;
         border: 1px solid #ccc;
         border-radius: 3px;
+        position: absolute;
+        margin:auto;
+        top:0;right:0;bottom:0;left:0;
+    }
+    /* full screen sytle*/ 
+    #pptslider:-webkit-full-screen{
+        width: 80% ;
+    }
+    #pptslider:-moz-full-screen{
+        width: 80%;
+    }
+    #pptslider:-ms-fullscreen{
+        width: 80% ;
     }
 
-    #pptslider.fullScreen{
-        margin:0;
-        width:90%;
-        height:90%;
+    #pptslider:-webkit-full-screen .pSlider-progress{
+        position: fixed;
+        left: 0;
+        bottom:0;
+        background: #fff;
+    }
+    #pptslider:-moz-full-screen .pSlider-progress{
+        position: fixed;
+        left: 0;
+        bottom:0;
+        background: #fff;
+
+    }
+    #pptslider:-ms-fullscreen .pSlider-progress{
+        position: fixed;
+        left: 0;
+        bottom:0;
+        background: #fff;
+    }
+
+
+    #pptslider:-webkit-full-screen .pSlider-control{
+        position: fixed;
+        width: 80%;
+        bottom: 4px;
+        opacity: 0;
+        margin: auto;
+        left:0; right:0;
+
+    }
+    #pptslider:-moz-full-screen .pSlider-control{
+        position: fixed;
+        width: 80%;
+        bottom: 4px;
+        opacity: 0;
+        margin: auto;
+        left:0; right:0;
+
+    }
+    #pptslider:-ms-fullscreen .pSlider-control{
+        position: fixed;
+        width: 80%;
+        bottom: 4px;
+        opacity: 0;
+        margin: auto;
+        left:0; right:0;
+    }
+
+    #pptslider:-webkit-full-screen .pSlider-control:hover{
+        opacity: 1;
+    }
+    #pptslider:-moz-full-screen .pSlider-control:hover{
+        opacity: 1;
+
+    }
+    #pptslider:-ms-fullscreen .pSlider-control:hover{
+        opacity: 1;
     }
     .pSlider-box{
         display: inline-block;
@@ -39,9 +103,9 @@
         background: #fff;
         display: inline-block;
         width: 19%;
-        overflow: scroll;
         height: 100%;
         max-height:100%;
+        position: absolute;
     }
     .pSlider-nav ul{
         overflow: hidden;
@@ -104,20 +168,15 @@
         position:relative;
         border: 1px solid #ccc;
         border-top-color: #fff;
-        clear:both;
         background: url(img/gradient1.png) repeat-x #e9ecf1;
         width:100%;
         height: 40px;
     }
     .pSlider-progress{
-        border: 1px solid #ccc;
-        clear:both;
-        height:3px;
+        height:2px;
         width: 0;
         background: #563d7c;
     }
-
-
 
      .pSlider-control img, .pSlider-control span{
         display:inline-block;
@@ -127,7 +186,6 @@
         cursor:pointer;
 
     }
-
     .pSlider-left-control, .pSlider-control>img, .pSlider-right-control{
         display:inline-block;
         position: absolute;
@@ -148,8 +206,6 @@
         top: 6px;
         width: 64px;
     }
-
-
 </style>
 </head>
 <body>
@@ -183,7 +239,7 @@
 
 </div>
 <script src='js/jquery.js'></script>
-<script src='js/pptSlider.js'></script>
+<script src='js/ppSlider.js'></script>
 <script>
 $(document).ready(function(){
         $("#pptslider").pptSlider({
