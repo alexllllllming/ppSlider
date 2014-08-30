@@ -257,8 +257,6 @@
                 foldNav = function(event){
                     var target = event.target
 
-                    isFold ? $navList.show() : $navList.hide()
-                    
                     isFold = !isFold
 
                     if (isFold){
@@ -267,7 +265,8 @@
                             .nextSibling
                             .src = "img/left-arrow.png"
                         
-                        $slideBox.animate({width:"100%"},settings.animationSpeed)
+                        $navList.hide()
+                        $slideBox.animate({width:"100%"})
                     }
                     else{
                         target.innerText = "收起列表"
@@ -275,7 +274,9 @@
                             .nextSibling
                             .src = "img/right-arrow.png"
                         
-                        $slideBox.animate({width:"80%"},settings.animationSpeed)
+                        $slideBox.animate({width:"80%"},function(){
+                             $navList.show();
+                        })
                     }
 
 
