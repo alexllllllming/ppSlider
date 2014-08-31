@@ -16,7 +16,7 @@
             animationSpeed: 1000,    // the time for animations, in milliseconds 
             hoverPause: false,       // slide pause when hover
             controlBar: true,        // show controlbar
-            navFold: true,           // default fold the navList
+            navFold: false,           // default not fold the navList
             classPrefix: 'pSlider-'
         },options)
 
@@ -190,17 +190,18 @@
                 },   
                 // slide change acoording to index num when click happen
                 slideToggle = function(curIdx){
-
+                    
+                    var beginIndex = settings.beginIndex
                     // same idx, no changes
                     if(curIdx == prevIdx)
                         return
 
                     $linkList
-                        .eq(curIdx)
+                        .eq(curIdx - beginIndex)
                         .addClass('active')
 
                     $linkList
-                        .eq(prevIdx)
+                        .eq(prevIdx - beginIndex)
                         .removeClass('active')
 
                     // animation between to slide
