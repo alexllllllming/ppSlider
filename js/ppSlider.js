@@ -37,7 +37,7 @@
                 outerWidth,                         // the width of a slide
                 classPrefix = settings.classPrefix, // css class prefix
                 isAutoPlay = settings.autoPlay,     // boolean flag for autoPlay
-                isFold = !settings.controlBar,      // boolean flag for navList folding
+                navFold = settings.navFold,      // boolean flag for navList folding
                 // animation effects
                 effects = ['flyUp', 'flyRight', 'flyDown', 'flyLeft',
                         'fadeIn'
@@ -258,22 +258,17 @@
 
                 foldNav = function(event){
                     var target = event.target
+                                           
+                    navFold = !navFold
 
-                    isFold ? $navList
-                                .show()
-                                .css({'display':'inline-block'})
-                           : $navList
-                                .hide()
-
-                        
-                    isFold = !isFold
-
-                    if (isFold){
+                    if (navFold){
                         target.innerText = "展开列表"
                         target
                             .nextSibling
                             .src = "img/left-arrow.png"
                         
+                        $navList
+                            .hide()
                         $slideBox.animate({width:"100%"})
                     }
                     else{
@@ -282,7 +277,11 @@
                             .nextSibling
                             .src = "img/right-arrow.png"
                         
-                        $slideBox.animate({width:"80%"})
+                        $slideBox.animate({width:"80%"},function(){
+                            $navList
+                                .show()
+                                .css({'display':'inline-block'})
+                        })
                     }
 
 
@@ -330,11 +329,11 @@
                                 .appendTo($this)
 
                         // controlBar click event
-                        settings.navFold ? $('span',$controlBar)
-                                                .on('click',foldNav)
-                                                .trigger('click')
-                                         : $('span',$controlBar)
-                                                .on('click',foldNav)
+                        navFold ? $('span',$controlBar)
+                                     .on('click',foldNav)
+                                     .trigger('click')
+                                : $('span',$controlBar)
+                                     .on('click',foldNav)
 
                         $('.'+classPrefix+"left-control").on('click', playSwitch)
                             
