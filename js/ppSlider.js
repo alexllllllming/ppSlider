@@ -241,7 +241,6 @@
                 },
 
                 stopPlay = function(target){
-                    console.log(target)
                     clearInterval(autoPlayHandler)
                     // switch button
                     target.src = "img/play.png"
@@ -253,7 +252,6 @@
                     var target = event.target
 
                     isAutoPlay = isAutoPlay ? stopPlay(target) : autoPlay(target);
-                    console.log(isAutoPlay)
                 },
 
                 foldNav = function(event){
