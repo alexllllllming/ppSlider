@@ -14,7 +14,138 @@
         top:0;right:0;bottom:0;left:0;
         background: #fff;
     }
-    /* full screen sytle*/ 
+   
+    /* @ppSlider slideBox*/ 
+    .pSlider-box{
+        display: inline-block;
+        width: 80%;
+        height: 100%;
+        background: url(img/bg.png);
+        position: relative;
+        overflow: hidden;
+    }
+ 
+    .pSlider-box img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    
+    /* @ppSlider nav*/ 
+    .pSlider-nav{
+        display: inline-block;
+        width: 18%;
+        height: 100%;
+        max-height:100%;
+        position: relative;
+    }
+    .pSlider-nav ul{
+        overflow: hidden;
+        padding:0;
+        margin:0;
+        list-style: none;
+        position: absolute;
+    }
+
+    .pSlider-nav ul li{
+        padding: 10px 0;
+    }
+
+    .pSlider-nav li ul{
+        display: none;
+    }
+    .pSlider-nav li ul li{
+        padding: 0;
+    }
+    .pSlider-nav ul li a{
+        display: inline-block;
+        font-size: 1.1em;
+        margin-left: 15px;
+        padding: 1px 0 1px 15px;
+        text-decoration: none;
+        color: #999;
+    }
+    
+    .pSlider-nav li ul li a{
+        font-size: 1.0em;
+        padding-left: 30px;
+        
+    }
+
+    .pSlider-nav li ul li ul li a{
+        font-size: 0.9em;
+        padding: 2px 0 2px 45px;
+
+    }
+    .pSlider-nav ul li a:hover,
+    .pSlider-nav ul li a.active{
+        border-left: 1px solid #563d7c;
+        color: #563d7c;
+    }
+
+    .pSlider-nav ul li a.active{
+        font-weight: bold;
+        padding-left: 13px;
+        border-left-width: 2px;
+    }
+    .pSlider-nav li ul li a.active{
+        font-weight: normal;
+        padding-left: 28px;
+    }
+    .pSlider-nav li ul li ul li a.active{
+        font-weight: normal;
+        padding-left: 43px;
+    }
+   
+    
+    /* @ppSlider progress*/ 
+    .pSlider-progress{
+        height:2px;
+        width: 0;
+        background: #fff;
+    }
+
+    /* @ppSlider controlbar*/ 
+    .pSlider-control{
+        position:relative;
+        border: 1px solid #ccc;
+        border-top-color: #fff;
+        background: url(img/gradient1.png) repeat-x #e9ecf1;
+        width:100%;
+        height: 40px;
+    }
+    .pSlider-control img, .pSlider-control span{
+        display:inline-block;
+        width:32px;
+        height: 32px;
+        margin: 5px 0 5px 6px;
+        cursor:pointer;
+
+    }
+    .pSlider-left-control, .pSlider-control>img, .pSlider-right-control{
+        display:inline-block;
+        position: absolute;
+    }
+    .pSlider-left-control{
+        left: 5px;
+    }
+
+    .pSlider-control>img{
+        left: 76%;
+    }
+    .pSlider-right-control{
+        right: 5px;
+    }
+    .pSlider-control span{ 
+        position: absolute;
+        left: -52px;
+        top: 6px;
+        width: 64px;
+    }
+
+     /* @ppSlider full screen*/ 
     #pSlider:-webkit-full-screen{
         width: 80% ;
     }
@@ -83,130 +214,6 @@
     #pSlider:-ms-fullscreen .pSlider-control:hover{
         opacity: 1;
     }
-    .pSlider-box{
-        display: inline-block;
-        width: 80%;
-        height: 100%;
-        background: url(img/bg.png);
-        position: relative;
-        overflow: hidden;
-    }
- 
-    .pSlider-box img{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-
-    
-    .pSlider-nav{
-        display: inline-block;
-        width: 18%;
-        height: 100%;
-        max-height:100%;
-        position: relative;
-    }
-    .pSlider-nav ul{
-        overflow: hidden;
-        padding:0;
-        margin:0;
-        list-style: none;
-        position: absolute;
-    }
-
-    .pSlider-nav ul li{
-        padding: 10px 0;
-    }
-
-    .pSlider-nav li ul{
-        display: none;
-    }
-    .pSlider-nav li ul li{
-        padding: 0;
-    }
-    .pSlider-nav ul li a{
-        display: inline-block;
-        font-size: 1.1em;
-        margin-left: 15px;
-        padding: 1px 0 1px 15px;
-        text-decoration: none;
-        color: #999;
-    }
-    
-    .pSlider-nav li ul li a{
-        font-size: 1.0em;
-        padding-left: 30px;
-        
-    }
-
-    .pSlider-nav li ul li ul li a{
-        font-size: 0.9em;
-        padding: 2px 0 2px 45px;
-
-    }
-    .pSlider-nav ul li a:hover,
-    .pSlider-nav ul li a.active{
-        border-left: 1px solid #563d7c;
-        color: #563d7c;
-    }
-
-    .pSlider-nav ul li a.active{
-        font-weight: bold;
-        padding-left: 13px;
-        border-left-width: 2px;
-    }
-    .pSlider-nav li ul li a.active{
-        font-weight: normal;
-        padding-left: 28px;
-    }
-    .pSlider-nav li ul li ul li a.active{
-        font-weight: normal;
-        padding-left: 43px;
-    }
-   
-    .pSlider-control{
-        position:relative;
-        border: 1px solid #ccc;
-        border-top-color: #fff;
-        background: url(img/gradient1.png) repeat-x #e9ecf1;
-        width:100%;
-        height: 40px;
-    }
-    .pSlider-progress{
-        height:2px;
-        width: 0;
-        background: #fff;
-    }
-
-     .pSlider-control img, .pSlider-control span{
-        display:inline-block;
-        width:32px;
-        height: 32px;
-        margin: 5px 0 5px 6px;
-        cursor:pointer;
-
-    }
-    .pSlider-left-control, .pSlider-control>img, .pSlider-right-control{
-        display:inline-block;
-        position: absolute;
-    }
-    .pSlider-left-control{
-        left: 5px;
-    }
-
-    .pSlider-control>img{
-        left: 76%;
-    }
-    .pSlider-right-control{
-        right: 5px;
-    }
-    .pSlider-control span{ 
-        position: absolute;
-        left: -52px;
-        top: 6px;
-        width: 64px;
-    }
 </style>
 </head>
 <body>
@@ -228,27 +235,6 @@
 
         </ul>
     </div>
-  
-
-</div>
-<script src='js/jquery.js'></script>
-<script src='js/ppSlider.js'></script>
-<script>
-$(document).ready(function(){
-        $("#pSlider").pptSlider({
-            beginIndex: 1,
-            hrefPrefix: 'slides/slide-'
-            });
-});
-</script>
-</body>
-</html>
-
-
-        </ul>
-    </div>
-  
-
 </div>
 <script src='js/jquery.js'></script>
 <script src='js/ppSlider.js'></script>
