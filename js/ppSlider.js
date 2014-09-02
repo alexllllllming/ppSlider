@@ -217,7 +217,7 @@
 
                     // switch button
                     if (target){
-                        target.src = "img/pause.png"
+                        target.src = "images/pause.png"
                     }
                     // set timer
                     autoPlayHandler = setInterval(function(){
@@ -244,7 +244,7 @@
                     console.log(target)
                     clearInterval(autoPlayHandler)
                     // switch button
-                    target.src = "img/play.png"
+                    target.src = "images/play.png"
 
                     return false;
                 },
@@ -265,7 +265,7 @@
                         target.innerText = "展开列表"
                         target
                             .nextSibling
-                            .src = "img/left-arrow.png"
+                            .src = "images/left-arrow.png"
                         
                         $navList
                             .hide()
@@ -275,7 +275,7 @@
                         target.innerText = "收起列表"
                         target
                             .nextSibling
-                            .src = "img/right-arrow.png"
+                            .src = "images/right-arrow.png"
                         
                         $slideBox.animate({width:"80%"},function(){
                             $navList
@@ -314,16 +314,16 @@
 
                     // if controlBar enabled, default: true
                     if (settings.controlBar){
-                        var playButton = isAutoPlay ? "img/pause.png" : "img/play.png"
+                        var playButton = isAutoPlay ? "images/pause.png" : "images/play.png"
                             
                         $controlBar = $("<div class='"+classPrefix+"progress'></div>"+
                                     "<div class='"+classPrefix+"control'>"+          
                                     "<div class='"+classPrefix+"left-control'>"+
                                     "<img src='"+playButton+"'></div>"+
                                     // if fullscreen is supported 
-                                    (fullscreen.support ? "<img src='img/full-screen.png'>" : "")+  
+                                    (fullscreen.support ? "<img src='images/full-screen.png'>" : "")+  
                                     "<div class='"+classPrefix+"right-control'>"+
-                                    "<span>收起列表</span><img src='img/right-arrow.png'></div>"+
+                                    "<span>收起列表</span><img src='images/right-arrow.png'></div>"+
                                     "</div>"
                                     )
                                 .appendTo($this)
