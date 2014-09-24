@@ -170,12 +170,15 @@
                     },speed)
 
                 },
-                // navList click envent handler
+                // navList click event handler
                 navClick = function(event){
                     var $target = $(event.target),
                         curIdx = $target.data('i')
-                    
+
+                    // slide change
                     slideToggle(curIdx)
+
+                    event.preventDefault()
                 },
 
                 createSlide = function(curIdx){
