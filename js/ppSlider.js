@@ -8,7 +8,7 @@
     $.fn.ppSlider = function(options){
         // Default settings
         var settings= $.extend({
-            imgType: '.JPG',         // default image type
+            imgType: '.jpg',         // default image type
             hrefPrefix: 'slide-',    // prefix for img src
             autoPlay: true,          // autoPlay: true or false
             beginIndex: 0,           // first index of your slides
