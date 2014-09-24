@@ -241,7 +241,13 @@
                 },
 
                 stopPlay = function(target){
+                    // stop the progress animation
+                    $("."+settings.classPrefix+"progress")
+                        .stop(true, true)
+
+                    // stop auto play
                     clearInterval(autoPlayHandler)
+
                     // switch button
                     target.src = "img/play.png"
 
@@ -290,9 +296,9 @@
                 // immediate function 
                 init = (function(){
                     // start with the first slide
-                    var i = prevIdx,
-                        $firstSlide = $(createSlide(prevIdx))
-                                            .appendTo($slideBox);
+                    var i = prevIdx
+                       // $firstSlide = $(createSlide(prevIdx))
+                        //                    .appendTo($slideBox)
 
                     outerHeight = $this.height()
                     outerWidth = $this.width()             
@@ -309,6 +315,11 @@
 
                     // display the first slide
                     $slideBox.append(createSlide(prevIdx))
+                    // first a tag active class style 
+                    $linkList
+                        .eq(0)
+                        .addClass('active')
+
 
                     // if controlBar enabled, default: true
                     if (settings.controlBar){
