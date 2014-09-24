@@ -217,7 +217,7 @@
 
                     // switch button
                     if (target){
-                        target.src = "images/pause.png"
+                        target.src = "img/pause.png"
                     }
                     // set timer
                     autoPlayHandler = setInterval(function(){
@@ -241,10 +241,15 @@
                 },
 
                 stopPlay = function(target){
-                    console.log(target)
+                    // stop the progress animation
+                    $("."+settings.classPrefix+"progress")
+                        .stop(true, true)
+
+                    // stop auto play
                     clearInterval(autoPlayHandler)
+
                     // switch button
-                    target.src = "images/play.png"
+                    target.src = "img/play.png"
 
                     return false;
                 },
@@ -253,7 +258,6 @@
                     var target = event.target
 
                     isAutoPlay = isAutoPlay ? stopPlay(target) : autoPlay(target);
-                    console.log(isAutoPlay)
                 },
 
                 foldNav = function(event){
@@ -265,7 +269,7 @@
                         target.innerText = "展开列表"
                         target
                             .nextSibling
-                            .src = "images/left-arrow.png"
+                            .src = "img/left-arrow.png"
                         
                         $navList
                             .hide()
@@ -275,7 +279,7 @@
                         target.innerText = "收起列表"
                         target
                             .nextSibling
-                            .src = "images/right-arrow.png"
+                            .src = "img/right-arrow.png"
                         
                         $slideBox.animate({width:"80%"},function(){
                             $navList
@@ -292,9 +296,9 @@
                 // immediate function 
                 init = (function(){
                     // start with the first slide
-                    var i = prevIdx,
-                        $firstSlide = $(createSlide(prevIdx))
-                                            .appendTo($slideBox);
+                    var i = prevIdx
+                       // $firstSlide = $(createSlide(prevIdx))
+                        //                    .appendTo($slideBox)
 
                     outerHeight = $this.height()
                     outerWidth = $this.width()             
@@ -311,19 +315,24 @@
 
                     // display the first slide
                     $slideBox.append(createSlide(prevIdx))
+                    // first a tag active class style 
+                    $linkList
+                        .eq(0)
+                        .addClass('active')
+
 
                     // if controlBar enabled, default: true
                     if (settings.controlBar){
-                        var playButton = isAutoPlay ? "images/pause.png" : "images/play.png"
+                        var playButton = isAutoPlay ? "img/pause.png" : "img/play.png"
                             
                         $controlBar = $("<div class='"+classPrefix+"progress'></div>"+
                                     "<div class='"+classPrefix+"control'>"+          
                                     "<div class='"+classPrefix+"left-control'>"+
                                     "<img src='"+playButton+"'></div>"+
                                     // if fullscreen is supported 
-                                    (fullscreen.support ? "<img src='images/full-screen.png'>" : "")+  
+                                    (fullscreen.support ? "<img src='img/full-screen.png'>" : "")+  
                                     "<div class='"+classPrefix+"right-control'>"+
-                                    "<span>收起列表</span><img src='images/right-arrow.png'></div>"+
+                                    "<span>收起列表</span><img src='img/right-arrow.png'></div>"+
                                     "</div>"
                                     )
                                 .appendTo($this)
@@ -375,4 +384,3 @@
     }
   
 })(jQuery);
-
